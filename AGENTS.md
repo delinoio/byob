@@ -13,12 +13,13 @@
 
 - `docs/`: Source of truth for project contracts and repository documentation.
 - `cmds/`: Go command tools.
+- `lint/`: Go runtime API for user-authored BYOB linter binaries.
 - `packages/`: TypeScript packages and Go bridge modules.
 - `scripts/`: Local development helper scripts.
 
 ### Validation
 
 - Run `go test ./...` when root Go code changes.
+- Run `go -C lint test ./...` when the BYOB lint runtime changes.
 - Run `go -C packages/tsgo-bridge test ./...` when the TypeScript-Go bridge changes.
 - Run `pnpm build` and `pnpm test` when TypeScript packages change.
-

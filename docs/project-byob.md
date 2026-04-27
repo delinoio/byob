@@ -1,13 +1,14 @@
 # Project: byob
 
 ## Goal
-Build a framework for authoring custom build tools on top of TypeScript-Go while keeping integration boundaries explicit and replaceable.
+Build a framework for authoring, building, and sharing custom build tools on top of TypeScript-Go while keeping integration boundaries explicit and replaceable.
 
 ## Project ID
 `byob`
 
 ## Domain Ownership Map
 - `cmds/byob`: BYOB command-line entry point.
+- `lint`: BYOB Go lint runtime API for user-authored linter binaries.
 - `packages/byob`: TypeScript SDK for build-tool definitions.
 - `packages/tsgo-bridge`: Go bridge that direct-links TypeScript-Go internals through an allowed module path.
 - `docs`: Repository and domain contracts.
@@ -15,6 +16,7 @@ Build a framework for authoring custom build tools on top of TypeScript-Go while
 
 ## Domain Contract Documents
 - `docs/cmds-byob-foundation.md`
+- `docs/lint-byob-runtime-foundation.md`
 - `docs/packages-byob-sdk-foundation.md`
 - `docs/packages-tsgo-bridge-foundation.md`
 
@@ -22,7 +24,9 @@ Build a framework for authoring custom build tools on top of TypeScript-Go while
 - Root BYOB Go code imports `github.com/microsoft/typescript-go/byobbridge`, not `github.com/microsoft/typescript-go/internal/...`.
 - The bridge module path remains `github.com/microsoft/typescript-go/byobbridge` so Go `internal/` import rules allow direct TypeScript-Go linkage.
 - The TypeScript SDK package name remains `@delinoio/byob`.
-- The initial CLI command identifier is `version`.
+- Stable CLI command identifiers include `version` and `lint`.
+- Stable BYOB tool-kind identifiers include `lint`, `fmt`, and `transform`; only `lint` is implemented initially.
+- BYOB must not import `github.com/web-infra-dev/rslint/internal/...` or shell out to `rslint` for core lint integration.
 
 ## Change Policy
 - Update this index and the relevant domain contract whenever CLI commands, SDK types, bridge imports, or repository structure change.
@@ -32,4 +36,3 @@ Build a framework for authoring custom build tools on top of TypeScript-Go while
 - `docs/README.md`
 - `docs/project-template.md`
 - `docs/domain-template.md`
-
