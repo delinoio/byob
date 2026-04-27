@@ -14,7 +14,7 @@
 
 ## Interfaces and Contracts
 - Module path: `github.com/microsoft/typescript-go/byobbridge`.
-- Pinned dependency: `github.com/microsoft/typescript-go v0.0.0-20260424234512-515d036f927a`.
+- Pinned dependency remains declared as `github.com/microsoft/typescript-go v0.0.0-20260424234512-515d036f927a`; the BYOB workspace replaces it with `packages/typescript-go-upstream` to keep the rslint shim and direct bridge on one internal API surface.
 - Public API includes `Info()` and `LinkedVersion()`.
 - The bridge is the only BYOB-owned module allowed to import `github.com/microsoft/typescript-go/internal/...`.
 
@@ -35,14 +35,15 @@
 
 ## Dependencies and Integrations
 - Directly imports TypeScript-Go internals from `github.com/microsoft/typescript-go/internal/core`.
+- Uses `packages/typescript-go-upstream` through local replacement in this repository.
 - Consumed by `cmds/byob` through public bridge APIs.
 
 ## Change Triggers
 - Update `docs/project-byob.md` and this file when the bridge module path, pinned TypeScript-Go version, or public bridge API changes.
 - Update `docs/cmds-byob-foundation.md` when bridge changes affect CLI output or command behavior.
+- Update `docs/packages-typescript-go-upstream-foundation.md` when the workspace TypeScript-Go snapshot changes.
 
 ## References
 - `docs/project-byob.md`
 - `docs/cmds-byob-foundation.md`
 - `docs/domain-template.md`
-

@@ -1,0 +1,41 @@
+{
+  "ExtraFunctions": ["isNonDeferredTypeReference"],
+  "ExtraMethods": {
+    "Checker": [
+      "getBaseConstraintOfType",
+      "getDeclaredTypeOfSymbol",
+      "getBaseTypes",
+      "getSignaturesOfType",
+      "getApparentType",
+      "getIndexTypeOfType",
+      "getPropertyOfType",
+      "getPropertiesOfType",
+      "getSignaturesOfType",
+      "getPropertyNameForKnownSymbolName",
+      "getTypeFromTypeNode",
+      "getAccessedPropertyName",
+      "isArrayOrTupleType",
+      "isArrayType",
+      "getTypeArguments",
+      "getContextualType",
+      "getAwaitedType",
+      "getTypeOfSymbol",
+      "getReturnTypeOfSignature",
+      "getContextualTypeForArgumentAtIndex",
+      "getResolvedSignature",
+      "getBaseTypeOfLiteralType",
+      "getWidenedType",
+      "isTypeAssignableTo",
+      "isTypeStrictSubtypeOf",
+      "getIndexInfosOfType"
+    ]
+  },
+  "ExtraFields": {
+    "Type": ["alias", "flags", "symbol", "objectFlags"],
+    "TupleType": ["combinedFlags"],
+    "LiteralType": ["freshType", "regularType"],
+    "Signature": ["parameters", "declaration"],
+    "Checker": ["numberType", "booleanType", "globalRegExpType"],
+    "InterfaceType": ["thisType"]
+  }
+}
