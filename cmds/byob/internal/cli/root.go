@@ -3,32 +3,50 @@ package cli
 import (
 	"fmt"
 	"io"
-	"os"
 
 	bridge "github.com/microsoft/typescript-go/byobbridge"
 )
 
 const byobVersion = "0.0.0-dev"
 
+type commandIdentifier string
+
+const (
+	commandHelp    commandIdentifier = "help"
+	commandVersion commandIdentifier = "version"
+	commandLint    commandIdentifier = "lint"
+)
+
 func Execute(args []string) int {
-	return execute(args, os.Stdout, os.Stderr)
+	return executeWithContext(args, defaultCommandContext())
 }
 
 func execute(args []string, stdout io.Writer, stderr io.Writer) int {
+	ctx := defaultCommandContext()
+	ctx.stdout = stdout
+	ctx.stderr = stderr
+	return executeWithContext(args, ctx)
+}
+
+func executeWithContext(args []string, ctx commandContext) int {
+	ctx.withDefaults()
+
 	if len(args) == 0 {
-		printUsage(stderr)
+		printUsage(ctx.stderr)
 		return 2
 	}
 
-	switch args[0] {
-	case "-h", "--help", "help":
-		printUsage(stdout)
+	switch commandIdentifier(args[0]) {
+	case "-h", "--help", commandHelp:
+		printUsage(ctx.stdout)
 		return 0
-	case "version":
-		return executeVersion(args[1:], stdout, stderr)
+	case commandVersion:
+		return executeVersion(args[1:], ctx.stdout, ctx.stderr)
+	case commandLint:
+		return executeLint(args[1:], ctx)
 	default:
-		_, _ = fmt.Fprintf(stderr, "unknown command %q\n", args[0])
-		printUsage(stderr)
+		_, _ = fmt.Fprintf(ctx.stderr, "unknown command %q\n", args[0])
+		printUsage(ctx.stderr)
 		return 2
 	}
 }
@@ -52,4 +70,5 @@ func printUsage(w io.Writer) {
 	_, _ = fmt.Fprintln(w)
 	_, _ = fmt.Fprintln(w, "commands:")
 	_, _ = fmt.Fprintln(w, "  version  Print BYOB and TypeScript-Go versions")
+	_, _ = fmt.Fprintln(w, "  lint     Build and run BYOB lint tools")
 }

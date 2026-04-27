@@ -2,6 +2,6 @@ go 1.26
 
 use (
 	.
+	./lint
 	./packages/tsgo-bridge
 )
-
