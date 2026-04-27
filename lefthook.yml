@@ -1,0 +1,10 @@
+pre-commit:
+  parallel: true
+  commands:
+    go-fmt:
+      glob: "**/*.go"
+      run: go fmt ./... && go -C packages/tsgo-bridge fmt ./...
+    ts-build:
+      glob: "packages/byob/src/**/*.ts"
+      run: pnpm build
+

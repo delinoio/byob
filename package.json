@@ -1,0 +1,17 @@
+{
+  "name": "byob-workspace",
+  "packageManager": "pnpm@10.28.2",
+  "private": true,
+  "scripts": {
+    "build": "turbo build",
+    "test": "turbo test",
+    "lint": "turbo lint",
+    "format": "turbo format",
+    "go:test": "go test ./... && go -C packages/tsgo-bridge test ./..."
+  },
+  "devDependencies": {
+    "lefthook": "^2.1.4",
+    "turbo": "^2.8.20"
+  }
+}
+
