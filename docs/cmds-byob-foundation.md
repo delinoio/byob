@@ -21,6 +21,7 @@
 - `byob lint run --main <path> [--target <goos/goarch>] [--] <args...>` builds or reuses the cached linter binary, forwards stdio, and returns the linter process exit code.
 - `lint run` defaults to the host `GOOS/GOARCH` and rejects non-host targets because cross-built binaries cannot be executed locally.
 - `--out` exports the binary and `byob-lint-artifact.json`; external uploads are outside the v1 CLI contract.
+- `examples/lint-all-rules/main.go` is the canonical all-rules smoke linter. It is run with `byob lint run --main examples/lint-all-rules/main.go -- --all-rules --type-check examples/lint-all-rules/fixtures`.
 
 ## Storage
 - Lint binaries are cached under `os.UserCacheDir()/byob/lint/<cache-key>/`.
@@ -31,6 +32,7 @@
 - Version output must avoid exposing local paths or environment values.
 - `lint run` executes only the user linter binary built from the explicit `--main` package.
 - BYOB must not shell out to `rslint` or `tsgo` for core lint/compiler integration.
+- The all-rules example reaches rslint through the BYOB rslint bridge, not an external executable.
 
 ## Logging
 - No structured runtime logging is required for the initial `version` command.
@@ -42,10 +44,12 @@
 - Lint runtime validation: `go -C lint test ./...`.
 - Runtime smoke check: `go run ./cmds/byob version`.
 - Lint smoke check: `go run ./cmds/byob lint build --main <linter-main.go>`.
+- All-rules lint smoke check: `go run ./cmds/byob lint run --main examples/lint-all-rules/main.go -- --all-rules --type-check examples/lint-all-rules/fixtures`.
 
 ## Dependencies and Integrations
 - Depends on `packages/tsgo-bridge` via `github.com/microsoft/typescript-go/byobbridge`.
 - Depends on `lint` via `github.com/delinoio/byob/lint` for runtime compatibility metadata.
+- Example all-rules linters may depend on `github.com/delinoio/byob/lint/upstream`.
 - Does not import TypeScript-Go `internal/` packages directly.
 - Does not import `github.com/web-infra-dev/rslint/internal/...`.
 
@@ -57,5 +61,6 @@
 ## References
 - `docs/project-byob.md`
 - `docs/lint-byob-runtime-foundation.md`
+- `docs/packages-rslint-bridge-foundation.md`
 - `docs/packages-tsgo-bridge-foundation.md`
 - `docs/domain-template.md`

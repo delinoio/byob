@@ -155,6 +155,31 @@ func TestLintRunBuildsForwardsArgsAndExitCode(t *testing.T) {
 	}
 }
 
+func TestLintRunExampleUpstreamAllRules(t *testing.T) {
+	root := repoRoot(t)
+	mainPath := filepath.Join(root, "examples", "lint-all-rules", "main.go")
+	fixturePath := filepath.Join(root, "examples", "lint-all-rules", "fixtures", "example.ts")
+	ctx := testCommandContext(t)
+
+	code, stdout, stderr := executeTestCommand(t, ctx, []string{
+		"lint",
+		"run",
+		"--main",
+		mainPath,
+		"--",
+		"--all-rules",
+		"--format",
+		"jsonline",
+		fixturePath,
+	})
+	if code == 0 {
+		t.Fatalf("expected upstream diagnostics to produce nonzero exit, stderr=%s stdout=%s", stderr, stdout)
+	}
+	if !strings.Contains(stdout, `"ruleName":"no-console"`) {
+		t.Fatalf("expected no-console diagnostic, stderr=%s stdout=%s", stderr, stdout)
+	}
+}
+
 func executeTestCommand(t *testing.T, ctx commandContext, args []string) (int, string, string) {
 	t.Helper()
 

@@ -21,4 +21,7 @@ Each project must have one project index document and one or more domain contrac
 - `docs/cmds-byob-foundation.md`
 - `docs/lint-byob-runtime-foundation.md`
 - `docs/packages-byob-sdk-foundation.md`
+- `docs/packages-rslint-bridge-foundation.md`
+- `docs/packages-rslint-upstream-foundation.md`
 - `docs/packages-tsgo-bridge-foundation.md`
+- `docs/packages-typescript-go-upstream-foundation.md`
